@@ -3,7 +3,7 @@ import xlwt
 import xdrlib,sys
 import xlsxwriter
 #open excel file 
-data = xlrd.open_workbook('../Desktop/data.xlsx')
+data = xlrd.open_workbook('/Users/zhaoyuxuan/Desktop/data.xlsx')
 		
 #get sheet
 rate = data.sheets()[0]
