@@ -3,16 +3,16 @@ import xlwt
 import xdrlib,sys
 import xlsxwriter
 #open excel file 
-data = xlrd.open_workbook('/Users/zhaoyuxuan/Desktop/data.xlsx')
+data = xlrd.open_workbook('/Users/zhaoyuxuan/Desktop/dataset suicide.xlsx')
 		
 #get sheet
-rate = data.sheets()[0]
+rate = data.sheets()[3]
 identifier = data.sheets()[1]
 population = data.sheets()[2]
 
 def GetPopulation():
 	i=-1
-	workbook = xlsxwriter.Workbook('suicide population.xlsx')
+	workbook = xlsxwriter.Workbook('suicide location.xlsx')
 	worksheet = workbook.add_worksheet()
 	for n in rate.col_values(1):
 		i=i+1
@@ -29,14 +29,14 @@ def GetPopulation():
 
 GetPopulation()
 
-suicide_population = xlrd.open_workbook('/Users/zhaoyuxuan/Desktop/suicide population.xlsx')
+suicide_population = xlrd.open_workbook('/Users/zhaoyuxuan/Desktop/suicide location.xlsx')
 location = suicide_population.sheets()[0]
 
 def GetLocation():
 	i=-181
 	row=0
 	col=0
-	workbook = xlsxwriter.Workbook('location.xlsx')
+	workbook = xlsxwriter.Workbook('location_lat&lng.xlsx')
 	worksheet = workbook.add_worksheet()
 	for m in range(0,location.ncols):
 		i=i+1
