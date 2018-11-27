@@ -9,20 +9,47 @@ data = xlrd.open_workbook('/Users/zhaoyuxuan/Desktop/data.xlsx')
 rate = data.sheets()[0]
 identifier = data.sheets()[1]
 population = data.sheets()[2]
-i=-1
 
-workbook = xlsxwriter.Workbook('suicide population.xlsx')
-worksheet = workbook.add_worksheet()
-for n in rate.col_values(1):
-	i=i+1
-	for row in range(0,identifier.nrows):
-		for col in range(0,identifier.ncols):
-			if n==identifier.cell_value(row,col):
-				m=population.cell_value(row,col)*rate.cell_value(i,2)
-				m=m/100000
-				m=m/365
-				m=86400/m
-				if m>0:
-					worksheet.write_number(row,col,m)
-				
-suicide = xlrd.open_workbook('/Users/zhaoyuxuan/Desktop/suicide population.xlsx')
+def GetPopulation():
+	i=-1
+	workbook = xlsxwriter.Workbook('suicide population.xlsx')
+	worksheet = workbook.add_worksheet()
+	for n in rate.col_values(1):
+		i=i+1
+		for row in range(0,identifier.nrows):
+			for col in range(0,identifier.ncols):
+				if n==identifier.cell_value(row,col):
+					m=population.cell_value(row,col)*rate.cell_value(i,2)
+					m=m/365
+					m=m/1000
+					m=86400/m
+					if m>0:
+						worksheet.write_number(row,col,m)
+	return
+
+GetPopulation()
+
+suicide_population = xlrd.open_workbook('/Users/zhaoyuxuan/Desktop/suicide population.xlsx')
+location = suicide_population.sheets()[0]
+
+def GetLocation():
+	i=-181
+	row=0
+	col=0
+	workbook = xlsxwriter.Workbook('location.xlsx')
+	worksheet = workbook.add_worksheet()
+	for m in range(0,location.ncols):
+		i=i+1
+		j=91
+		for n in range(0,location.nrows):
+			j=j-1
+			k=location.cell_value(n,m)
+			if k!="":
+				worksheet.write_number(row,col,i)
+				worksheet.write_number(row,col+1,j)
+				worksheet.write_number(row,col+2,k)
+				row=row+1
+	return
+
+GetLocation()
+
