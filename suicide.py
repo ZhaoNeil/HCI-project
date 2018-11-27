@@ -3,7 +3,7 @@ import xlwt
 import xdrlib,sys
 import xlsxwriter
 #open excel file 
-data = xlrd.open_workbook('/Users/zhaoyuxuan/Desktop/dataset suicide.xlsx')
+data = xlrd.open_workbook('../Desktop/dataset suicide.xlsx')
 		
 #get sheet
 rate = data.sheets()[3]
@@ -29,7 +29,7 @@ def GetPopulation():
 
 GetPopulation()
 
-suicide_population = xlrd.open_workbook('/Users/zhaoyuxuan/Desktop/suicide location.xlsx')
+suicide_population = xlrd.open_workbook('../Desktop/suicide location.xlsx')
 location = suicide_population.sheets()[0]
 
 def GetLocation():
