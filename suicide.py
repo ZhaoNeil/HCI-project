@@ -20,9 +20,10 @@ def GetPopulation():
 			for col in range(0,identifier.ncols):
 				if n==identifier.cell_value(row,col):
 					m=population.cell_value(row,col)*rate.cell_value(i,2)
-					m=m/365
-					m=m/1000
-					m=86400/m
+					m=m/1000 #calculate how many people commit suicide every year
+					# m=m/365
+					# m=86400/m
+					"""calculate how many seconds per person commits suicide"""
 					if m>0:
 						worksheet.write_number(row,col,m)
 	return
@@ -36,7 +37,7 @@ def GetLocation():
 	i=-181
 	row=0
 	col=0
-	workbook = xlsxwriter.Workbook('location_lat&lng.xlsx')
+	workbook = xlsxwriter.Workbook('lng&lat.xlsx')
 	worksheet = workbook.add_worksheet()
 	for m in range(0,location.ncols):
 		i=i+1
