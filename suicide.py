@@ -1,6 +1,5 @@
 import xlrd
 import xlwt
-# import xdrlib,sys
 import xlsxwriter
 from decimal import Decimal
 #open excel file 
