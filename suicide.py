@@ -1,7 +1,6 @@
 import xlrd
 import xlwt
 import xlsxwriter
-from decimal import Decimal
 #open excel file 
 data = xlrd.open_workbook('../Desktop/dataset suicide.xlsx')
 		
