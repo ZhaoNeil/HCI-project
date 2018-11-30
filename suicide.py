@@ -1,7 +1,8 @@
 import xlrd
 import xlwt
-import xdrlib,sys
+# import xdrlib,sys
 import xlsxwriter
+from decimal import Decimal
 #open excel file 
 data = xlrd.open_workbook('../Desktop/dataset suicide.xlsx')
 		
@@ -20,11 +21,14 @@ def GetPopulation():
 			for col in range(0,identifier.ncols):
 				if n==identifier.cell_value(row,col):
 					m=population.cell_value(row,col)*rate.cell_value(i,2)
-					m=m/1000 #calculate how many people commit suicide every year
+					m=m/1000 
+					#calculate how many people commit suicide every year
+					m=round(m,2)			
 					# m=m/365
-					# m=86400/m
-					"""calculate how many seconds per person commits suicide"""
-					if m>0:
+					# m=86400/m 
+					#calculate how many seconds per person commits suicide
+					if m>1: 
+						#ignore values taht are too small
 						worksheet.write_number(row,col,m)
 	return
 
@@ -41,7 +45,8 @@ def GetLocation():
 	worksheet = workbook.add_worksheet()
 	for m in range(0,location.ncols):
 		i=i+1
-		j=91
+		j=85 
+		#latitude starts from 84
 		for n in range(0,location.nrows):
 			j=j-1
 			k=location.cell_value(n,m)
