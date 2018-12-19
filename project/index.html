@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Suicide Globe</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+      html {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background: #000000 url(loading.gif) center center no-repeat;
+        color: #ffffff;
+        font-family: sans-serif;
+        font-size: 13px;
+        line-height: 20px;
+        height: 100%;
+      }
+      #info {
+        font-size: 11px;
+        position: absolute;
+        bottom: 5px;
+        background-color: rgba(0, 0, 0, 0.8);
+        border-radius: 3px;
+        right: 10px;
+        padding: 10px;
+      }
+      #currentInfo {
+        width: 270px;
+        position: absolute;
+        left: 20px;
+        top: 55px;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.4);
+        border-top: 1px solid rgba(255, 255, 255, 0);
+        padding: 10px;
+      }
+
+      #currentInfoStatus {
+        text-align: center;
+        font-size: 14px;
+      }
+      a {
+        color: #aaa;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .bull {
+        padding: 0 5px;
+        color: #555;
+      }
+      #title {
+        position: absolute;
+        top: 8px;
+        width: 1270px;
+        left: 20px;
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+        font: 22px Georgia;
+        padding: 10px;
+      }
+      #subtitle{
+        position: absolute;
+        top: 25px;
+        width: 1270px;
+        left: 0px;
+        background-color: rgba(0, 0, 0, 0);
+        border-radius: 3px;
+        font: 12px Georgia;
+        padding: 10px;
+      }
+      .time {
+        font: 16px Georgia;
+        line-height: 26px;
+        height: 80px;
+        text-align: center;
+        float: left;
+        width: 90px;
+        cursor: pointer;
+      }
+      #ce span {
+        display: none;
+      }
+      #ce {
+        width: 107px;
+        height: 55px;
+        display: block;
+        position: absolute;
+        bottom: 15px;
+        left: 20px;
+      }
+      .arrow {
+        font-size: 11px;
+        position: absolute;
+        bottom: 2%;
+        background-color: rgba(0, 0, 0, 0);
+        border-radius: 0px;
+        right: 47%;
+        padding: 10px;
+      }
+      .dropdown {
+        position: absolute;
+        right:2%;
+        top:10%;
+        display: inline-block;
+      }
+      .dropdown1 {
+        position: absolute;
+        right:2%;
+        top:20%;
+        display: inline-block;
+      }
+      .dropdown2 {
+        position: absolute;
+        right:2%;
+        top:30%;
+        display: inline-block;
+      }
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #000000;
+        min-width: 230px;
+        box-shadow: 0px 8px 16px 0px rgba(255,255,255,0.2);
+        padding: 12px 16px;
+        text-align: center;
+        right:100%;
+        top:10%;
+      }
+      .dropdown-content1 {
+        display: none;
+        position: absolute;
+        background-color: #000000;
+        min-width: 230px;
+        box-shadow: 0px 8px 16px 0px rgba(255,255,255,0.2);
+        padding: 12px 16px;
+        text-align: center;
+        right:100%;
+        top:20%;
+      }
+      .dropdown-content2 {
+        display: none;
+        position: absolute;
+        background-color: #000000;
+        min-width: 230px;
+        box-shadow: 0px 8px 16px 0px rgba(255,255,255,0.2);
+        padding: 12px 16px;
+        text-align: center;
+        right:100%;
+        top:30%;
+      }
+      .dropup-content {
+        display: none;
+        position: absolute;
+        bottom: 50px;
+        left:-620%;
+        background-color: #c7c7c7;
+        /*opacity:0.5;*/
+        min-width: 860px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        /*text-align: center;*/
+      }
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+      .dropdown1:hover .dropdown-content1 {
+        display: block;
+      }
+      .dropdown2:hover .dropdown-content2 {
+        display: block;
+      }
+      .arrow:hover .dropup-content {
+        display: block;
+      }
+      .link{
+        color:#FF0000;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    <div id="info">
+      <span
+        ><strong
+          ><a href="https://www.113.nl/"
+            >Are you worried about someone with suicidal thoughts or do you have
+            problems? Then contact 113</a
+          >
+        </strong></span
+      >
+      <span class="bull">&bull;</span
+      ><span
+        ><a href="http://www.chromeexperiments.com/globe"
+          >WebGL Globe - originally from Google</a
+        >
+      </span>
+      <span class="bull">&bull;</span
+      ><a href="https://short-funny.com/"> Program by Edwin de Haan</a>
+      <span class="bull">&bull;</span
+      ><a href="https://short-funny.com/"> Concept by Matthias v/d Waal</a>
+    </div>
+
+    <div id="currentInfo">
+      <span id="all_day"
+        ><a class="time" onclick="changePrev()"
+          ><img id="prev" src="rewind.png"/></a
+      ></span>
+      <span id="all_week"
+        ><a class="time" onclick="loadFreq('freq.json')"
+          ><img id="play" src="refresh.png"/></a
+      ></span>
+      <span id="all_month"
+        ><a class="time" onclick="changeNext()"
+          ><img id="next" src="forward.png"/></a
+      ></span>
+      <span><div id="currentInfoStatus"></div></span>
+    </div>
+
+    <div class ="arrow">
+      <img id="charityButton" src="information button.png"/>
+      <div class="dropup-content">
+      <h1 align="center">Support the National Suicide Prevention Lifeline</h2>
+      <h3 align="center">Together, we can raise awareness of suicide prevention and save lives.</h3>
+      <font size="4" color="black" align="left"><i>Who we are </i></font>
+      <font size="3">The National Suicide Prevention Lifeline is a leader in suicide prevention and mental health crisis care. Since its inception, the Lifeline has engaged in a variety of initiatives to improve crisis services and advance suicide prevention for all, including innovative public messaging, best practices in mental health, and groundbreaking partnerships.</font><br>
+      <font size="4" color="black" align="left"><i>What we do </i></font>
+      <font size="3">The National Suicide Prevention Lifeline is a national network of local crisis centers that provides free and confidential emotional support to people in suicidal crisis or emotional distress 24 hours a day, 7 days a week. We're committed to improving crisis services and advancing suicide prevention by empowering individuals, advancing professional best practices, and building awareness.</font><br>
+      <font size="4" color="black" align="left"><i>How your donation helps </i></font>
+      <font size="3">Your generosity helps us strengthen our growing infrastructure, supports local crisis centers, and provides support for the counselors answering Lifeline calls.</font>
+  </div>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <img src="suicide.png">
+      <div id="myDropdown" class="dropdown-content">
+        <font align="left" size="3">Name:Parker Lee</font><br>
+        <font align="left" size="3">Age:22</font>
+        <br><p>The 22-year-old Parker Lee committed suicide by hanging himself in his house. According to the local police, the victim attended Great Lake College, in Ohio. He left a letter alleging that his fellow students and teachers harassed him, which led him to commit suicide.</p>
+        <font size="1">Find out more about SPL in the info section</font><br>
+        <a class="link" href="https://suicidepreventionlifeline.org/donate/">Donate to SPL</a><br>
+      </div>
+    </div>
+
+    <div class="dropdown1">
+      <img src="suicide1.png">
+      <div id="myDropdown1" class="dropdown-content1">
+        <font align="left" size="3">Name:Nobuko Kobayashi</font><br>
+        <font align="left" size="3">Age:36</font>
+        <br><p>Nobuko Kobayashi’s body was recovered from a river, after she jumped from a bridge. Her family reported that she was struggling with her recent divorce and the pressure to divide for her two children.</p>
+        <font size="1">Find out more about SPL in the info section</font><br>
+        <a class="link" href="https://suicidepreventionlifeline.org/donate/">Donate to SPL</a><br>
+      </div>
+    </div>
+
+    <div class="dropdown2">
+      <img src="suicide2.png">
+      <div id="myDropdown2" class="dropdown-content2">
+        <font align="left" size="3">Name:Jonathan Hallberg</font><br>
+        <font align="left" size="3">Age:14</font>
+        <br><p>The body of the 14-year-old boy was found at home by his mother, who noticed he had locked the door. He suffered a history of self-harm and bipolar disorder which got the better of him.</p>
+        <font size="1">Find out more about SPL in the info section</font><br>
+        <a class="link" href="https://suicidepreventionlifeline.org/donate/">Donate to SPL</a><br>
+      </div>
+    </div>
+
+    <div id="title">
+      800,000 people commit suicide per year, that's 90 people every hour.<br>
+      <div id="subtitle">
+      Each red column indicates a suicide within the past hour, their size depends on how long ago within that time-frame.
+      </div>
+    </div>
+
+    <a id="ce" href="http://www.chromeexperiments.com/globe"> </a>
+
+    <script type="text/javascript" src="third-party/Detector.js"></script>
+    <script type="text/javascript" src="third-party/three.min.js"></script>
+    <script type="text/javascript" src="third-party/Tween.js"></script>
+    <script type="text/javascript" src="globe.js"></script>
+    <script type="text/javascript" src="moment.js"></script>
+    <script type="text/javascript">
+      var maxpoint = 0.25;
+      //	var pointdata=[40.3436661, -124.4748306, 0.20421052631578948, 63.4922, -147.4552, 0.1368421052631579, 38.800499, -122.7440033, 0.1031578947368421, 60.1589, -141.3549, 0.1368421052631579, 38.838665, -122.8398361, 0.16842105263157894];
+      var pointdata = [
+        40.3436661,
+        -124.4748306,
+        1,
+        63.4922,
+        -147.4552,
+        0.75,
+        38.800499,
+        -122.7440033,
+        0.5,
+        60.1589,
+        -141.3549,
+        0.25,
+        38.838665,
+        -122.8398361,
+        0.125
+      ];
+
+      var d = new Date();
+      var t = d.getTime() / 1000;
+      var data;
+      var update = false;
+      var limit = 3600;
+      var change = 0;
+
+      if (!Detector.webgl) {
+        Detector.addGetWebGLMessage();
+      } else {
+        var container = document.getElementById('container');
+        var globe = new DAT.Globe(container);
+        var xhr = new XMLHttpRequest();
+        //		window.onload = lastUpdated();
+        window.onload = loadFreq('freq.json'); // createGlobe('all_day.json');
+      }
+
+      function changePrev() {
+        change = -1;
+        document.getElementById('prev').src = 'rewind dark.png';
+        document.getElementById('play').src = 'refresh.png';
+        document.getElementById('next').src = 'forward.png';
+      }
+
+      function changeNext() {
+        change = 1;
+        document.getElementById('prev').src = 'rewind.png';
+        document.getElementById('play').src = 'refresh.png';
+        document.getElementById('next').src = 'fast forward dark.png';
+      }
+
+      var globeAnimated = false; //Has the globe already been animated?
+      function createGlobe(jsonInput) {
+        setCurrentInfoStatusLoading(jsonInput);
+        xhr.open('GET', 'data/' + jsonInput, true);
+        xhr.onreadystatechange = function(e) {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            globe.removeAllPoints();
+            var data = JSON.parse(xhr.responseText);
+            for (var i = 0; i < data.length; i++) {
+              //					globe.addData(data[i][1], {format: 'magnitude', name: 'Earthquakes'});
+              globe.addData(pointdata, {
+                format: 'magnitude',
+                name: 'Earthquakes'
+              });
+            }
+
+            globe.createPoints();
+            if (!globeAnimated) {
+              //globe becomes really slow if when animated again - this prevents that
+              globe.animate();
+              globeAnimated = true;
+            }
+
+            document.body.style.backgroundImage = 'none';
+          }
+        };
+        xhr.send(null);
+        //		setCurrentInfoStatus(jsonInput);
+      }
+
+      function updateFreq() {
+        update = true;
+        if (change == 0) {
+          d = new Date();
+          t = d.getTime() / 1000;
+        } else {
+          if (change > 0) {
+            t = t + 41;
+          } else {
+            t = t - 41;
+          }
+          d.setTime(t * 1000);
+        }
+        pointdata = [];
+
+        for (var i = 0; i < data.length; i += 3) {
+          var diff = t % data[2 + i];
+          //								document.getElementById("ce").innerHTML = "Test data: update "+diff;
+          if (diff < limit) {
+            pointdata.push(data[0 + i]);
+            pointdata.push(data[1 + i]);
+            pointdata.push(0.3 * (1 - diff / limit));
+
+            //				document.getElementById("ce").innerHTML = "Test data: "+t;
+          }
+          globe.removeAllPoints();
+          globe.addData(pointdata, {
+            format: 'magnitude',
+            name: 'Earthquakes'
+          });
+        }
+
+        globe.createPoints();
+        if (!globeAnimated) {
+          //globe becomes really slow if when animated again - this prevents that
+          globe.animate();
+          globeAnimated = true;
+        }
+
+        document.body.style.backgroundImage = 'none';
+        setCurrentInfoStatus('datum');
+        setTimeout(updateFreq, 1000);
+      }
+
+      function loadFreq(jsonInput) {
+        document.getElementById('prev').src = 'rewind.png';
+        document.getElementById('play').src = 'refresh dark.png';
+        document.getElementById('next').src = 'forward.png';
+        setCurrentInfoStatusLoading(jsonInput);
+        xhr.open('GET', jsonInput, true);
+        var d = new Date();
+        change = 0;
+        xhr.onreadystatechange = function(e) {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            //				globe.removeAllPoints();
+            data = JSON.parse(xhr.responseText);
+            t = d.getTime() / 1000;
+            pointdata = [];
+            document.getElementById('ce').innerHTML =
+              'Load data: ' + data.length;
+            for (var i = 0; i < data.length; i += 3) {
+              var diff = t % data[2 + i];
+              if (diff < limit) {
+                pointdata.push(data[0 + i]);
+                pointdata.push(data[1 + i]);
+                pointdata.push(0.3 * (1 - diff / limit));
+
+                //				document.getElementById("ce").innerHTML = "Test data: "+t;
+              }
+              //					globe.addData(data[i][1], {format: 'magnitude', name: 'Earthquakes'});
+              globe.addData(pointdata, {
+                format: 'magnitude',
+                name: 'Earthquakes'
+              });
+            }
+
+            globe.createPoints();
+            if (!globeAnimated) {
+              //globe becomes really slow if when animated again - this prevents that
+              globe.animate();
+              globeAnimated = true;
+            }
+            //				document.getElementById("ce").innerHTML = "Test data: "+data[2].toString();
+
+            document.body.style.backgroundImage = 'none';
+            if (update == false) {
+              updateFreq();
+            }
+          }
+        };
+        xhr.send(null);
+        setCurrentInfoStatus(jsonInput);
+      }
+
+      function setCurrentInfoStatusLoading(jsonInput) {
+        var response =
+          '<center> ' +
+          moment(d).format('MMMM Do YYYY, h:mm:ss a') +
+          '</<center>';
+        document.getElementById('currentInfoStatus').innerHTML = response;
+      }
+
+      function setCurrentInfoStatus(jsonInput) {
+        var response =
+          '<center> ' +
+          moment(d).format('MMMM Do YYYY, h:mm:ss a') +
+          '</<center>';
+        document.getElementById('currentInfoStatus').innerHTML = response;
+      }
+
+      function showCharity() {
+        var img = document.getElementById('popup');
+        if (img.style.display == 'block') {
+          img.style.display = 'none';
+        } else {
+          img.style.display = 'block';
+        }
+      }
+
+      /* 
+	function lastUpdated(){
+		var done = false;
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', 'data/last_updated.json', true);
+		xhr.send(null);
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState === 4 && xhr.status === 200 ) {
+				 var time = JSON.stringify(JSON.parse(xhr.responseText)).replace(/['"]+/g, '');		 
+		}
+		var response = "Last updated: " + time;
+		document.getElementById('lastUpdated').innerHTML = response;
+		}
+	}
+	
+	function updatePoints()
+	{
+
+	  var i = 2; 
+	  while (i < pointdata.length) 
+	  {
+         pointdata[i]=pointdata[i]-0.005;
+		 if (pointdata[i]<0) { pointdata[i]=0; }
+		 i=i+3;
+	  }
+	  createGlobe('all_day.json');
+  	  setTimeout(updatePoints, 1000);
+
+	}
+*/
+
+      //	updatePoints();
+      //	loadFreq("freq.json");
+    </script>
+  </body>
+</html>
