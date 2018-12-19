@@ -4,4 +4,4 @@ The origin code from <https://github.com/ferguras/webgl-globe>
 
 Dataset from <http://sedac.ciesin.columbia.edu/data/collection/gpw-v4/sets/browse>
 
-![](/Users/zhaoyuxuan/Desktop/Screen Shot 2018-12-19 at 20.25.52.png)
+![MacDown Screenshot](https://github.com/ZhaoNeil/HCI-project/blob/master/effect.png)
